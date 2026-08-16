@@ -45,7 +45,7 @@ engram-power-template/
 │   └── domain-entity.md
 │
 ├── AGENTS.md                   # Instruções cross-tool (Antigravity, Codex, Cursor)
-├── CLAUDE.md                   # Contexto do Claude Code
+├── CONTRIBUTING.md             # Guia de manutenção e validação
 ├── OPENAI.md                   # Notas de integração OpenAI / Codex
 │
 ├── agents/                     # Subagente — lido por Claude Code e Cursor
@@ -54,9 +54,11 @@ engram-power-template/
 │   └── power.mdc
 ├── dev.kiro/                   # Namespace de extensão do Kiro
 │   └── steering/power.md
-├── .claude-plugin/             # Manifesto do Claude Code
-│   └── plugin.json
+├── .claude-plugin/             # Manifestos do Claude Code
+│   ├── plugin.json             #   plugin
+│   └── marketplace.json        #   marketplace (distribuição)
 ├── .mcp.json                   # MCP do Claude Code
+├── LICENSE
 │
 ├── .cursor/rules/power.mdc     # Regras de workspace do Cursor
 ├── .agents/rules/power.md      # Regras de workspace do Antigravity
