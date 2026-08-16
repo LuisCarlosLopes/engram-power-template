@@ -1,0 +1,12 @@
+---
+description: "Engram Power Specialist rules for domain analysis and atomic note capture"
+globs: ["*"]
+alwaysApply: true
+---
+
+# Engram Power — Cursor Rules
+
+Ao atuar como especialista deste Engram Power:
+- Execute diagnósticos e recomendações utilizando o método do domínio via skills `power-{dominio}-analyze` e `power-{dominio}-capture`.
+- Formate notas atômicas em Markdown com frontmatter conforme `power-config.yaml`.
+- Conecte sempre os novos registros às notas existentes no vault do usuário via `[[wikilinks]]`.

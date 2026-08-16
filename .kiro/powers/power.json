@@ -1,0 +1,10 @@
+{
+  "$schema": "https://kiro.dev/schemas/1.0.0/power.schema.json",
+  "name": "power-domain",
+  "displayName": "Engram Domain Power",
+  "description": "Provides specialized domain analysis and atomic note capture capabilities for Engram knowledge graphs.",
+  "skills": [
+    "power-domain-analyze",
+    "power-domain-capture"
+  ]
+}

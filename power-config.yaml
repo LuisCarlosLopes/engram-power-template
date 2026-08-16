@@ -1,0 +1,37 @@
+# Fragmento de Ontologia do Engram Power
+# Este arquivo declara as entidades, receitas e templates que este Power adiciona à base de conhecimento.
+
+power_name: "engram-power-dominio"
+domain: "dominio" # Slug curto (ex: juridico, financeiro, marketing, devops)
+version: "1.0.0"
+
+# Entidades especializadas deste domínio
+# Regra Anti-Colisão: Use prefixo ou chaves específicas do domínio (ex: legal-case, fin-invoice, mkt-campaign)
+entities:
+  - key: domain-item            # Ex: juridico-processo, fin-lancamento
+    label: Itens do Domínio
+    label_singular: Item do Domínio
+    folder: Dominio             # Pasta que será criada no vault
+    template: atomic
+    fields: [categoria, status, responsavel]
+
+# Receitas de captura rápida (intake_recipes) específicas do poder
+# Regra Anti-Colisão: Gatilhos com prefixo/palavras contextualizadas
+intake_recipes:
+  domain-capture:               # Ex: juridico-precedente, fin-despesa
+    kind: dated-atomic          # dated-atomic | catalog-card | literature
+    triggers: ["capturar item de dominio", "registrar analise de dominio"]
+    path: "Dominio/{YYYY-MM}/{YYYY-MM-DD}-{slug}.md"
+    template: domain-item
+    dedup: [titulo, data]
+    always_link: ["MOC - Dominio"]
+    extra_sections: [Contexto, Analise Tecnica, Acoes Recomendadas]
+
+# Princípios editoriais e regras de ouro deste poder
+design_rules:
+  principles:
+    - "Toda análise deve conter recomendação prática e acionável."
+    - "Conecte sempre as entidades deste poder com os clientes/projetos do vault principal via wikilinks."
+  anti_patterns:
+    - "Não armazenar dados brutos sem síntese atômica."
+    - "Não usar nomes genéricos (ex: 'analisar', 'capturar') que colidam com outros plugins."

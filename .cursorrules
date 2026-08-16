@@ -1,0 +1,4 @@
+# Engram Power Rules
+- Opere sobre o vault com notas atômicas em Markdown.
+- Execute análises com base em power-config.yaml e nas skills em skills/.
+- Toda nota nova deve ter frontmatter YAML e wikilinks bidirecionais.

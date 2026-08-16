@@ -1,0 +1,53 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "engram-power-template",
+  "version": "1.0.0",
+  "description": "Template base para criação de Engram Powers com padrão de nomes anti-colisão (power-{dominio}-{acao}) para bases cognitivas e vaults Obsidian",
+  "author": "Seu Nome / Sua Empresa",
+  "license": "MIT",
+  "repository": "https://github.com/usuario/engram-power-nome",
+  "homepage": "https://github.com/usuario/engram-power-nome",
+  "keywords": [
+    "engram",
+    "engram-power",
+    "agent-plugins",
+    "obsidian",
+    "skills",
+    "knowledge-base",
+    "second-brain",
+    "openai",
+    "claude",
+    "cursor",
+    "antigravity",
+    "kiro",
+    "copilot"
+  ],
+  "extensions": {
+    "com.openai": {
+      "instructions": ".openai/instructions.md",
+      "assistant": ".openai/assistant.json"
+    },
+    "com.anthropic.claude": {
+      "agent": ".claude/agents/power-domain-specialist.md",
+      "context": "CLAUDE.md"
+    },
+    "com.anysphere.cursor": {
+      "rules": [
+        ".cursor/rules/power.mdc"
+      ]
+    },
+    "com.google.antigravity": {
+      "rules": [
+        ".agents/rules/power.md"
+      ],
+      "workspaceRules": "AGENTS.md"
+    },
+    "com.aws.kiro": {
+      "config": ".kiro/config.json",
+      "power": ".kiro/powers/power.json"
+    },
+    "com.github.copilot": {
+      "instructions": ".github/copilot-instructions.md"
+    }
+  }
+}

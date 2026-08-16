@@ -1,0 +1,8 @@
+{
+  "$schema": "https://kiro.dev/schemas/1.0.0/config.schema.json",
+  "name": "engram-power-template",
+  "version": "1.0.0",
+  "powers": [
+    ".kiro/powers/power.json"
+  ]
+}
