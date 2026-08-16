@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "SEU-USUARIO-engram-powers",
+  "description": "Engram Powers — skills, subagentes e ontologias para bases cognitivas e vaults Obsidian",
+  "owner": {
+    "name": "SEU-NOME-OU-EMPRESA",
+    "url": "https://github.com/SEU-USUARIO"
+  },
+  "plugins": [
+    {
+      "name": "engram-power-dominio",
+      "source": "./",
+      "description": "Descreva aqui o que o seu Power faz no domínio escolhido",
+      "version": "1.0.0",
+      "author": {
+        "name": "SEU-NOME-OU-EMPRESA",
+        "url": "https://github.com/SEU-USUARIO"
+      },
+      "homepage": "https://github.com/SEU-USUARIO/engram-power-dominio",
+      "repository": "https://github.com/SEU-USUARIO/engram-power-dominio",
+      "license": "MIT",
+      "category": "productivity",
+      "keywords": [
+        "engram",
+        "engram-power",
+        "obsidian",
+        "knowledge-base",
+        "second-brain"
+      ],
+      "tags": [
+        "obsidian",
+        "knowledge-management"
+      ]
+    }
+  ]
+}

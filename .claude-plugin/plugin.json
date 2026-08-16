@@ -4,12 +4,12 @@
   "description": "Template base para criação de Engram Powers com padrão de nomes anti-colisão (power-{dominio}-{acao}) para bases cognitivas e vaults Obsidian",
   "version": "1.0.0",
   "author": {
-    "name": "Luis Carlos Lopes Jr.",
-    "url": "https://github.com/LuisCarlosLopes"
+    "name": "SEU-NOME-OU-EMPRESA",
+    "url": "https://github.com/SEU-USUARIO"
   },
   "license": "MIT",
-  "repository": "https://github.com/LuisCarlosLopes/engram-power-template",
-  "homepage": "https://github.com/LuisCarlosLopes/engram-power-template",
+  "repository": "https://github.com/SEU-USUARIO/engram-power-dominio",
+  "homepage": "https://github.com/SEU-USUARIO/engram-power-dominio",
   "keywords": [
     "engram",
     "engram-power",

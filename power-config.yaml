@@ -1,7 +1,7 @@
 # Fragmento de Ontologia do Engram Power
 # Este arquivo declara as entidades, receitas e templates que este Power adiciona à base de conhecimento.
 
-power_name: "engram-power-dominio"
+power_name: "engram-power-dominio"  # Deve casar com o "name" de plugin.json após o rename
 domain: "dominio" # Slug curto (ex: juridico, financeiro, marketing, devops)
 version: "1.0.0"
 
