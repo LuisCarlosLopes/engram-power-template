@@ -23,20 +23,38 @@ O núcleo portátil (`plugin.json`, `skills/`, `mcp.json`) segue o padrão [Agen
 
 O `plugin.json` e o `mcp.json` da raiz existem para os clientes Agent Plugins (Codex, Cursor, Copilot, Kiro) e são ignorados pelo Claude Code. Tabela completa no [README](README.md#-compatibilidade-multi-assistente).
 
-## Por que o marketplace está desativado
+## O que cada provedor exige para publicar
 
-O catálogo vive em `.claude-plugin/marketplace.json.example`, com o sufixo `.example` de propósito. Com um `marketplace.json` ativo, duas coisas indesejadas acontecem:
+O conceito de "marketplace" **não é o mesmo** entre clientes. Só o Claude Code exige um arquivo de catálogo no repositório:
 
-1. O template vira instalável — e quem instalasse receberia skills que não fazem nada.
-2. `claude plugin validate .` passa a validar **só o marketplace** e devolve exit 0 sem checar o plugin, mascarando avisos.
+| Provedor | Precisa de catálogo no repo? | Como se publica |
+|---|---|---|
+| **Claude Code** (auto-hospedado) | ✅ `.claude-plugin/marketplace.json` | `claude plugin marketplace add owner/repo` |
+| **Claude Code** (community) | ❌ | Formulário de submissão; a Anthropic fixa o commit no catálogo dela |
+| **Cursor** | ❌ para plugin único (`.cursor-plugin/marketplace.json` só p/ monorepo) | Submeter o repo em `cursor.com/marketplace/publish` — revisão manual, precisa ser open source |
+| **Kiro Powers** | ❌ | `plugin.json` na raiz basta; instala do marketplace ou direto do GitHub |
+| **GitHub Copilot** | ❌ | Não há marketplace: as instruções valem por repositório |
+| **Codex / OpenAI** | ⚠️ não confirmado | O repo `openai/plugins` indica `.codex-plugin/plugin.json`; não achei doc que diga se o `plugin.json` da raiz basta |
 
-Por isso, para validar o template, aponte para o manifesto do plugin explicitamente:
+> [!IMPORTANT]
+> **Não apague o `.claude-plugin/marketplace.json`.** Sem ele, o diálogo *Adicionar
+> marketplace* do Claude Code responde *"Este repositório não é um marketplace — nenhum
+> manifest encontrado em .claude-plugin/marketplace.json"*. É o erro mais provável ao
+> publicar um Power gerado a partir deste template.
+
+## Alvos de validação
+
+Com um `marketplace.json` presente, `claude plugin validate .` valida **só o marketplace** e devolve exit 0 sem checar o plugin. Rode os dois alvos:
+
+```bash
+claude plugin validate . --strict
+```
 
 ```bash
 claude plugin validate ./.claude-plugin/plugin.json --strict
 ```
 
-Deve terminar com `✔ Validation passed`. Para o núcleo Agent Plugins, valide `plugin.json` e `mcp.json` contra os schemas em `https://agent-plugins.org/schemas/1.0.0/`.
+Ambos devem terminar com `✔ Validation passed`. Para o núcleo Agent Plugins, valide `plugin.json` e `mcp.json` contra os schemas em `https://agent-plugins.org/schemas/1.0.0/`.
 
 ## Nomenclatura Anti-Colisão
 
@@ -45,11 +63,22 @@ Deve terminar com `✔ Validation passed`. Para o núcleo Agent Plugins, valide 
 
 Como plugin instalado no Claude Code, as skills ficam namespaced como `/{plugin-name}:power-{dominio}-analyze`.
 
+> [!WARNING]
+> **Ponto não documentado.** O subagente em `agents/` declara `skills: [power-domain-analyze, power-domain-capture]`
+> com nomes nus. A documentação do Claude Code só exemplifica esse campo com skills de
+> escopo project/user e **não define** se skills vindas de um plugin precisam do prefixo
+> `{plugin-name}:`. O carregamento do plugin foi verificado (`claude --plugin-dir .`
+> descobre subagente e as duas skills), mas o *preload* em si não foi confirmado.
+>
+> Se o subagente do seu Power não vier com as skills já em contexto, tente o nome
+> namespaced ou remova o campo — ele é opcional e controla apenas o preload, não o
+> acesso: sem ele o subagente ainda invoca as skills pela ferramenta Skill.
+
 ## Regras ao editar o template
 
 - **Não crie um `CLAUDE.md` na raiz** — reintroduz o aviso de validação.
-- **Não ative o `marketplace.json`** neste repositório — ele é o template, não um Power publicável.
-- **Mantenha os placeholders como placeholders.** `SEU-USUARIO`, `SEU-NOME-OU-EMPRESA` e `dominio` são intencionais: trocá-los por valores reais faz todo fork nascer com a identidade errada.
+- **Mantenha os placeholders como placeholders.** `SEU-USUARIO`, `SEU-NOME-OU-EMPRESA` e `dominio` são intencionais: trocá-los por valores reais faz todo fork nascer com a identidade errada. É o `scripts/init-power.sh` que os resolve, no momento do fork.
+- **Ao mexer no `init-power.sh`, teste numa cópia descartável.** Ele faz `git mv` e `perl -pi` em massa; um regex frouxo corrompe a prosa. A substituição de `Dominio` é deliberadamente sem acento, para não tocar em "Domínio" no texto corrido.
 - `plugin.json` e `.claude-plugin/plugin.json` devem ficar em sincronia nos campos comuns.
 - O `description` de cada `SKILL.md` decide o roteamento do assistente: descreva *quando acionar*, não como editar o template.
 - Ao renomear as skills, atualize também `agents/`, `rules/`, `.cursor/rules/`, `.agents/rules/`, `.github/instructions/` e `dev.kiro/steering/`.

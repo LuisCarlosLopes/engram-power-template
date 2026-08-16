@@ -13,10 +13,7 @@ Scaffold para criar **Engram Powers** — módulos de habilidades e ontologias e
 > `power-config.yaml` cria uma pasta literalmente chamada `Dominio`. Instalar isto num
 > vault real não entrega capacidade nenhuma — só polui a lista de skills.
 >
-> O fluxo correto é **clonar → renomear → preencher → publicar o seu Power**.
-> Por isso não há um `marketplace.json` ativo: existe um
-> [`marketplace.json.example`](.claude-plugin/marketplace.json.example) para você
-> ativar depois de personalizar.
+> O fluxo correto é **clonar → rodar `scripts/init-power.sh` → preencher → publicar**.
 
 Todos os manifestos são válidos e passam nos validadores oficiais. É isso que o template entrega: **um scaffold comprovadamente correto**, para que o seu fork já nasça conforme.
 
@@ -70,9 +67,10 @@ engram-power-template/
 ├── dev.kiro/                   # Namespace de extensão do Kiro
 │   └── steering/power.md
 ├── .claude-plugin/             # Manifestos do Claude Code
-│   ├── plugin.json             #   plugin (ativo)
-│   └── marketplace.json.example  # catálogo (inativo — renomeie ao publicar)
+│   ├── plugin.json             #   plugin
+│   └── marketplace.json        #   catálogo (necessário p/ `marketplace add`)
 ├── .mcp.json                   # MCP do Claude Code
+├── scripts/init-power.sh       # Personaliza o template para o seu domínio
 │
 ├── .cursor/rules/power.mdc     # Regras de workspace do Cursor
 ├── .agents/rules/power.md      # Regras de workspace do Antigravity
@@ -117,51 +115,50 @@ Use o botão **Use this template** do GitHub (ou clone) para criar `engram-power
 ### 2. Escolher o slug do domínio
 Um slug curto em minúsculas: `juridico`, `mkt`, `financas`, `rh`.
 
-### 3. Checklist de substituição
+### 3. Rodar o bootstrap
 
-Todo valor `SEU-USUARIO`, `SEU-NOME-OU-EMPRESA`, `dominio` e `domain` é placeholder e **precisa ser trocado**:
+Renomeia skills e subagente, substitui todos os placeholders mecânicos e valida:
 
-| Arquivo | O que trocar |
+```bash
+./scripts/init-power.sh marketing SEU-USUARIO "Seu Nome ou Empresa"
+```
+
+### 4. Preencher o que o script não faz
+
+O script trata identificadores. O conteúdo continua sendo seu:
+
+| Arquivo | O que preencher |
 |---|---|
-| `plugin.json` | `name` → `engram-power-{dominio}`; `author`, `repository`, `homepage` |
-| `.claude-plugin/plugin.json` | os mesmos campos, mantendo em sincronia |
-| `skills/power-domain-*/` | nome da pasta, `name` do frontmatter e — principalmente — o `description` |
-| `agents/power-domain-specialist.md` | nome do arquivo, `name` e as skills referenciadas |
-| `power-config.yaml` | `power_name`, `domain`, `entities`, `intake_recipes`, `folder` |
-| `templates/domain-entity.md` | `tipo`, `tags`, MOC de destino |
-| `rules/`, `.cursor/rules/`, `.agents/rules/`, `.github/instructions/`, `dev.kiro/steering/` | referências a `power-{dominio}-*` |
+| `skills/power-{dominio}-*/SKILL.md` | o `description` — ver aviso abaixo |
+| `power-config.yaml` | `entities`, `intake_recipes`, `design_rules` |
+| `templates/` | estrutura da nota do seu domínio |
+| `README.md` | descreva o seu Power, não o template |
 | `LICENSE` | detentor do copyright |
-| `README.md` | este arquivo inteiro — descreva o seu Power, não o template |
 
 > [!WARNING]
 > O `description` de cada `SKILL.md` é o que o assistente lê para decidir **quando
 > acionar a skill**. Deixá-lo genérico é o erro mais caro do processo: a skill ou
 > nunca dispara, ou dispara em tudo.
 
-### 4. Validar o scaffold
-```bash
-claude plugin validate ./.claude-plugin/plugin.json --strict
-```
-
-Teste local no Claude Code:
+### 5. Testar
 ```bash
 claude --plugin-dir .
 ```
 
-### 5. Publicar
-Ative o catálogo renomeando o exemplo e preenchendo os campos:
-```bash
-mv .claude-plugin/marketplace.json.example .claude-plugin/marketplace.json
-```
+### 6. Publicar
 
-Depois valide o catálogo e publique:
+Suba para o GitHub num repositório **público** e registre:
+
 ```bash
-claude plugin validate . --strict
+claude plugin marketplace add SEU-USUARIO/engram-power-{dominio}
 ```
 
 > [!CAUTION]
-> Troque o `name` do marketplace antes de publicar. Cada usuário só pode registrar
-> **um marketplace por nome** — adicionar um segundo com o mesmo nome substitui o
-> primeiro. Publicar com o nome do exemplo colide com todo mundo que fez o mesmo.
+> O `marketplace add` do Claude Code exige `.claude-plugin/marketplace.json` **no repositório**.
+> Sem esse arquivo o diálogo responde *"Este repositório não é um marketplace"*. O bootstrap já
+> o deixa preenchido — só não o apague.
+>
+> Cada usuário registra **um marketplace por nome**: adicionar outro com o mesmo nome substitui
+> o primeiro. Por isso o script deriva o nome do seu usuário do GitHub.
 
-Ver [CONTRIBUTING.md](CONTRIBUTING.md) para os alvos de validação e as regras de manutenção.
+Ver [CONTRIBUTING.md](CONTRIBUTING.md) para os alvos de validação e o que cada provedor exige.
