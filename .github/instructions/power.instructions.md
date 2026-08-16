@@ -1,6 +1,5 @@
 ---
 applyTo: "**/*"
-priority: high
 ---
 
 # GitHub Copilot Agent Rules — Engram Power

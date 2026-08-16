@@ -1,8 +1,8 @@
 {
-  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "engram-power-template",
-  "version": "1.0.0",
   "description": "Template base para criação de Engram Powers com padrão de nomes anti-colisão (power-{dominio}-{acao}) para bases cognitivas e vaults Obsidian",
+  "version": "1.0.0",
   "author": {
     "name": "Luis Carlos Lopes Jr.",
     "url": "https://github.com/LuisCarlosLopes"
@@ -15,9 +15,6 @@
     "engram-power",
     "obsidian",
     "knowledge-base",
-    "second-brain",
-    "atomic-notes",
-    "wikilinks",
-    "dominio"
+    "second-brain"
   ]
 }

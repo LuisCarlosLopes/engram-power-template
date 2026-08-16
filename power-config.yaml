@@ -6,7 +6,8 @@ domain: "dominio" # Slug curto (ex: juridico, financeiro, marketing, devops)
 version: "1.0.0"
 
 # Entidades especializadas deste domínio
-# Regra Anti-Colisão: Use prefixo ou chaves específicas do domínio (ex: legal-case, fin-invoice, mkt-campaign)
+# Regra Anti-Colisão: chaves em kebab-case no padrão {dominio}-{entidade}
+# (ex: juridico-processo, financeiro-lancamento, marketing-campanha)
 entities:
   - key: domain-item            # Ex: juridico-processo, fin-lancamento
     label: Itens do Domínio

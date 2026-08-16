@@ -3,7 +3,7 @@ description: "Engram Power Specialist rules for domain analysis and atomic note 
 alwaysApply: true
 ---
 
-# Engram Power — Cursor Rules
+# Engram Power — Cursor Plugin Rules
 
 Ao atuar como especialista deste Engram Power:
 - Execute diagnósticos e recomendações utilizando o método do domínio via skills `power-{dominio}-analyze` e `power-{dominio}-capture`.
